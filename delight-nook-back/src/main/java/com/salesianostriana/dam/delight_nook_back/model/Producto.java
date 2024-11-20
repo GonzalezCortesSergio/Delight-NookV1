@@ -34,4 +34,20 @@ public class Producto {
     @EqualsAndHashCode.Exclude
     @Builder.Default
     private List<Resenia> resenia = new ArrayList<>();
+
+
+
+    //Métodos HELPER
+
+    public void addResenia(Resenia r) {
+
+        this.resenia.add(r);
+        r.setProducto(this);
+    }
+
+    public void removeResenia(Resenia r) {
+
+        this.resenia.remove(r);
+        r.setProducto(null);
+    }
 }
