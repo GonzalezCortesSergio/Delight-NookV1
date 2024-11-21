@@ -36,30 +36,34 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Producto> mostrarUno(@PathVariable Long id) {
+    public ResponseEntity<GetProductoDto> mostrarUno(@PathVariable Long id) {
 
         Optional<Producto> optionalProducto = productoService.findById(id);
 
-        return optionalProducto.map(producto -> new ResponseEntity<>(producto, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT));
+        if(optionalProducto.isEmpty())
+            return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+
+        Producto response = optionalProducto.get();
+
+        return new ResponseEntity<>(GetProductoDto.of(response), HttpStatus.OK);
 
     }
 
     @PostMapping
-    public ResponseEntity<Producto> crear(@RequestBody Producto p) {
+    public ResponseEntity<GetProductoDto> crear(@RequestBody Producto p) {
 
-        return new ResponseEntity<>(p, HttpStatus.CREATED);
+        return new ResponseEntity<>(GetProductoDto.of(productoService.save(p)), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> editar(@RequestBody Producto p, @PathVariable Long id) {
+    public ResponseEntity<GetProductoDto> editar(@RequestBody Producto p, @PathVariable Long id) {
 
         Producto aEditar = productoService.edit(p, id);
 
         if (aEditar == null)
             return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
 
-        return new ResponseEntity<>(aEditar, HttpStatus.OK);
+        return new ResponseEntity<>(GetProductoDto.of(aEditar), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -76,7 +80,7 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}/resenia/add")
-    public ResponseEntity<Producto> agregarResenia(@RequestBody Resenia resenia, @PathVariable Long idProducto) {
+    public ResponseEntity<GetProductoDto> agregarResenia(@RequestBody Resenia resenia, @PathVariable Long idProducto) {
 
         Producto producto = productoService.addResenia(resenia, idProducto);
 
@@ -85,17 +89,17 @@ public class ProductoController {
             return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
         }
 
-        return new ResponseEntity<>(producto, HttpStatus.OK);
+        return new ResponseEntity<>(GetProductoDto.of(producto), HttpStatus.OK);
     }
 
     @PutMapping("/{idProducto}/resenia/{idResenia}/remove")
-    public ResponseEntity<Producto> borrarResenia(@PathVariable("idProducto")Long idProducto, @PathVariable("idResenia")Long idResenia) {
+    public ResponseEntity<GetProductoDto> borrarResenia(@PathVariable("idProducto")Long idProducto, @PathVariable("idResenia")Long idResenia) {
 
         Producto producto = productoService.removeResenia(idResenia, idProducto);
 
         if (producto == null)
             return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
 
-        return new ResponseEntity<>(producto, HttpStatus.OK);
+        return new ResponseEntity<>(GetProductoDto.of(producto), HttpStatus.OK);
     }
 }

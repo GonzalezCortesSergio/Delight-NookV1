@@ -4,10 +4,15 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { ProductoListComponent } from './components/producto-list/producto-list.component';
+import { ProductoCardComponent } from './components/producto-card/producto-card.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProductoListComponent,
+    ProductoCardComponent
   ],
   imports: [
     BrowserModule,
@@ -15,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })

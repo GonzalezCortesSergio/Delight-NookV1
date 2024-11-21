@@ -7,6 +7,7 @@ import java.util.List;
 public record GetProductoDto(
         Long id,
         String nombreProducto,
+        String photoUrl,
         GetTipoProductoDto tipoProducto,
         Double precio,
         List<GetReseniaDto> resenias
@@ -17,6 +18,7 @@ public record GetProductoDto(
         return new GetProductoDto(
                 p.getId(),
                 p.getNombreProducto(),
+                p.getPhotoUrl(),
                 GetTipoProductoDto.of(p.getTipoProducto()),
                 p.getPrecio(),
                 p.getResenia().stream()

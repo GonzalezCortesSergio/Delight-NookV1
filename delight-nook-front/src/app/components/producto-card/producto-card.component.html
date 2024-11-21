@@ -1,0 +1,12 @@
+<div class="col-3 mb-5">
+    <div class="card">
+        <img class="card-img-top" [src]="producto.photoUrl" [alt]="'Imagen del producto ' + producto.nombreProducto" />
+
+        <div class="card-body">
+
+            <h5 class="card-title">{{producto.nombreProducto}}</h5>
+
+            <p class="card-text">{{producto.precio | currency:"EUR"}}</p>
+        </div>
+    </div>
+</div>

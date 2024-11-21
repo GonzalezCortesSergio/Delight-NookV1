@@ -26,8 +26,9 @@ public class ProductoService extends BaseServiceImpl<Producto, Long, ProductoRep
 
         antiguo.setNombreProducto(p.getNombreProducto());
         antiguo.setPrecio(p.getPrecio());
+        antiguo.setPhotoUrl(p.getPhotoUrl());
 
-        return antiguo;
+        return repository.save(antiguo);
     }
 
     public Producto addResenia(Resenia r, Long idProducto) {

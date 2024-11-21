@@ -20,6 +20,9 @@ public class Producto {
     @Column(name = "nombre")
     private String nombreProducto;
 
+    @Column(columnDefinition = "TEXT")
+    private String photoUrl;
+
     @ManyToOne
     private TipoProducto tipoProducto;
 
